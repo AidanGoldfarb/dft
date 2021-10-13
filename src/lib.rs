@@ -38,6 +38,8 @@ extern crate num_traits;
 
 use num_complex::Complex;
 use num_traits::{Float, FloatConst, One};
+use crate::rttrace::{Data,init,trace};
+
 
 /// A complex number with 32-bit parts.
 #[allow(non_camel_case_types)]
@@ -47,8 +49,10 @@ pub type c32 = Complex<f32>;
 #[allow(non_camel_case_types)]
 pub type c64 = Complex<f64>;
 
+
 mod complex;
 mod real;
+mod rttrace;
 
 pub use real::unpack;
 
@@ -74,7 +78,7 @@ pub struct Plan<T> {
 /// The transform.
 pub trait Transform<T> {
     /// Perform the transform.
-    fn transform(&mut self, &Plan<T>);
+    fn transform(&mut self, _:&Plan<T>, tracer: &mut Data);
 }
 
 impl<T> Plan<T>
@@ -122,9 +126,11 @@ where
 ///
 /// The function is a shortcut for `Transform::transform`.
 #[inline(always)]
-pub fn transform<D: ?Sized, T>(data: &mut D, plan: &Plan<T>)
+pub fn transform<D: ?Sized, T>(data: &mut D, plan: &Plan<T>) -> Data
 where
     D: Transform<T>,
 {
-    Transform::transform(data, plan);
+    let mut tracer = init();
+    Transform::transform(data, plan, &mut tracer);
+    tracer
 }

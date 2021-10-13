@@ -1,6 +1,8 @@
 use num_complex::Complex;
 use num_traits::Float;
 use std::slice::from_raw_parts_mut;
+use crate::rttrace::{Data,init,trace};
+
 
 use {Operation, Plan, Transform};
 
@@ -8,7 +10,8 @@ impl<T> Transform<T> for [T]
 where
     T: Float,
 {
-    fn transform(&mut self, plan: &Plan<T>) {
+    fn transform(&mut self, plan: &Plan<T>, tracer: &mut Data) {
+        println!("3");
         let n = self.len();
         assert!(n == plan.n);
         let h = n >> 1;
@@ -18,12 +21,12 @@ where
         let data = unsafe { from_raw_parts_mut(self.as_mut_ptr() as *mut _, h) };
         match plan.operation {
             Operation::Forward => {
-                data.transform(plan);
-                compose(data, h, &plan.factors, false);
+                data.transform(plan, tracer);
+                compose(data, h, &plan.factors, false, tracer);
             }
             Operation::Backward | Operation::Inverse => {
-                compose(data, h, &plan.factors, true);
-                data.transform(plan);
+                compose(data, h, &plan.factors, true, tracer);
+                data.transform(plan, tracer);
             }
         }
     }
@@ -34,8 +37,8 @@ where
     T: Float,
 {
     #[inline(always)]
-    fn transform(&mut self, plan: &Plan<T>) {
-        Transform::transform(&mut self[..], plan)
+    fn transform(&mut self, plan: &Plan<T>, tracer: &mut Data) {
+        Transform::transform(&mut self[..], plan, tracer)
     }
 }
 
@@ -68,10 +71,11 @@ where
 }
 
 #[inline(always)]
-fn compose<T>(data: &mut [Complex<T>], n: usize, factors: &[Complex<T>], inverse: bool)
+fn compose<T>(data: &mut [Complex<T>], n: usize, factors: &[Complex<T>], inverse: bool, tracer: &mut Data)
 where
     T: Float,
 {
+    println!("4");
     let one = T::one();
     let half = (one + one).recip();
     let h = n >> 1;
