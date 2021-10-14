@@ -1,6 +1,6 @@
 // The implementation is based on:
 // http://www.librow.com/articles/article-10
-use crate::rttrace::{Data,init,trace};
+use crate::rttrace::{Data,trace};
 use num_complex::Complex;
 use num_traits::Float;
 
@@ -18,7 +18,6 @@ where
         if let Operation::Inverse = plan.operation {
             scale(self, n);
         }
-        println!("done");
     }
 }
 

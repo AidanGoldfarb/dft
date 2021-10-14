@@ -38,7 +38,7 @@ extern crate num_traits;
 
 use num_complex::Complex;
 use num_traits::{Float, FloatConst, One};
-use crate::rttrace::{Data,init,trace};
+use crate::rttrace::{Data,init};
 
 
 /// A complex number with 32-bit parts.
