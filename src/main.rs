@@ -1,5 +1,6 @@
 extern crate dft;
 use dft::{Operation, Plan};
+use std::env;
 
 
 fn main(){
@@ -7,14 +8,16 @@ fn main(){
 }
 
 fn test_fft(){
-    let sz = 8192;
+    let args: Vec<String> = env::args().collect();
+
+    let sz = args[1].parse::<usize>().unwrap();
     let plan = Plan::new(Operation::Forward, sz);
     //let rplan = Plan::new(Operation::Inverse, 16);
     let mut data = init_arr(sz);
     //println!("{:?}", data);
     let tracer = dft::transform(&mut data, &plan);
     //println!("{:?}", data);
-    println!("{}", tracer.dmd);
+    println!("{}", *tracer.dmd / (sz as f32 * (sz as f32).ln()));
     // dft::transform(&mut data, &rplan);
     // println!("{:?}", data);
 }
