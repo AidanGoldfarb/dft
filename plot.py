@@ -48,7 +48,7 @@ def graph_scatter(x,y,title,xlab,ylab,filename):
 	plt.title(title)
 	plt.xlabel(xlab)
 	plt.ylabel(ylab)
-	#plt.yscale("log")
+	plt.xscale("log")
 
 	# for i, txt in enumerate(labels):
 	# 	plt.annotate(txt, (x[i], y[i]))
@@ -110,7 +110,7 @@ def graph_scatter(x,y,title,xlab,ylab,filename):
 def main():
 	x = [4,8,16,32,64,128,256,512,1024,2048,4096,8192]
 	y = [17.974691, 423.84277, 3020.3599, 20018.984, 116134.914, 641586.94, 3360777, 17152856, 85080140, 414978140, 1989286300, 9423568000]
-	graph_scatter(x,y,"DMD of FFT","Matrix size", "Frequency","fftplot")
+	graph_scatter(x,y,"DMD of FFT","Matrix size", "Frequency","fftplotxlog")
 	# dim = "16x16"
 	# stacked_bar("DMD on mm size " + dim, dim)
 	#(ab,c,t) = collect_freq()
