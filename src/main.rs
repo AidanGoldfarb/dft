@@ -17,9 +17,9 @@ fn test_fft(){
     let mut output_file = File::create("fft_output.txt").unwrap();
     let trials = calc_trials(args[1].parse::<usize>().unwrap());
 
-    write!(
+    writeln!(
         output_file,
-        "FFT TEST on matrix sizes: {:?}\n",
+        "FFT TEST on matrix sizes: {:?}",
         trials
     ).unwrap();
     /*
@@ -42,10 +42,10 @@ fn test_fft(){
         /*
         Access fields
         */
-        let _stack = *tracer.stack;
-        let _freq_map = *tracer.freq_map;
+        let _stack = tracer.stack;
+        let _freq_map = tracer.freq_map;
         let dmd = *tracer.dmd;
-        let trace = *tracer.trace;
+        let trace = tracer.trace;
         /*
         */
 

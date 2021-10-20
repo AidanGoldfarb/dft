@@ -115,9 +115,9 @@ where
             step <<= 1;
         }
         Plan {
-            n: n,
-            factors: factors,
-            operation: operation,
+            n,
+            factors,
+            operation,
         }
     }
 }

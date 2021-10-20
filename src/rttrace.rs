@@ -2,10 +2,10 @@ use std::collections::HashMap;
 
 #[derive(Debug)]
 pub struct Data {
- 	pub stack: Box<Vec<String>>,
-	pub freq_map: Box<HashMap<usize,usize>>,
+ 	pub stack: Vec<String>,
+	pub freq_map: HashMap<usize,usize>,
 	pub dmd: Box<f32>,
-    pub trace: Box<Vec<String>>,
+    pub trace: Vec<String>,
 }
 
 // #[derive(Debug)]
@@ -16,18 +16,17 @@ pub struct Data {
 // }
 
 pub fn init() -> Data {
-	let stack = Box::new(Vec::new());
-	let freq_map: Box<HashMap<usize,usize>> = Box::new(HashMap::new());
+	let stack = Vec::new();
+	let freq_map: HashMap<usize,usize> = HashMap::new();
 	let dmd = Box::new(0.0);
-    let trace = Box::new(Vec::new());
+    let trace = Vec::new();
 
-	let d =  Data {
+	Data {
 		stack,
 		freq_map,
 		dmd,
         trace,
-	};
-    d
+	}
 }
 
 
