@@ -32,6 +32,7 @@ pub fn init() -> Data {
 
 
 pub fn trace(val: String, data: &mut Data){
+    data.trace.push("n".to_string());
     if data.stack.contains(&val){ //resuse
         let position = data.stack.iter().position(|x| *x == val).unwrap();  //get position in stack
         if position == data.stack.len()-1{ //top of stack
