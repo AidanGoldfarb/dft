@@ -25,7 +25,7 @@ def parse():
             y_trace.append(float(arr[2]))
     return (x,y_time,y_trace)
 
-def graph(x,y,func,title,xaxis_lab, yaxis_lab):
+def graph(x,y,func,title,xaxis_lab, yaxis_lab,filename):
     popt, pcov = curve_fit(func, x, y)
 
     print("A: ", popt)
@@ -35,16 +35,24 @@ def graph(x,y,func,title,xaxis_lab, yaxis_lab):
     ySqrt = func(trialX, *popt)
 
     pyplot.figure()
-    pyplot.title(title)
+    pyplot.title("a = " + str(popt), fontsize=9)
+    pyplot.suptitle(title)
     pyplot.xlabel(xaxis_lab)
     pyplot.ylabel(yaxis_lab)
     pyplot.plot(x, y, label='Data', marker='o')
     pyplot.plot(trialX, ySqrt, 'r-',ls='--', label="sqrt Fit")
     # pyplot.plot(trialX,   y, label = '10 Deg Poly')
     pyplot.legend()
-    pyplot.show()
+    # pyplot.show()
+    pyplot.savefig(filename+".png", bbox_inches = 'tight')
 
 
 (x,y_time,y_trace) = parse() #[4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192]
-graph(x,y_time, funcA, "title","x axis","yaxis")
-graph(x,y_time, funcB, "title","x axis","yaxis")
+
+graph(x,y_trace, funcA, "Trace length","matrix size","DMD / trace_len", "trace_A")
+
+graph(x,y_trace, funcB, "Trace length","matrix size","DMD / trace_len", "trace_B")
+
+graph(x,y_time, funcA, "Time complexity","matrix size","DMD / time cmplx", "time_A")
+
+graph(x,y_time, funcB, "Time complexity","matrix size","DMD / time cmplx", "time_B")
